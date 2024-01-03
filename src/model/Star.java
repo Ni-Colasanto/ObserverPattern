@@ -1,7 +1,9 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import util.Observer;
@@ -40,6 +42,7 @@ public class Star implements Subject{
 			return false;
 		} 
 		
+		System.out.println("Observer is already registerd");
 		return observers.add(observer);
 	}
 
@@ -61,21 +64,25 @@ public class Star implements Subject{
 		}
 		
 		observers.forEach((obs) -> {
-			obs.update(this);
+			obs.update(getData());
 		});
 		changed = false;
 		return true;
 	}
 
-	@Override
-	public Object getUpdate(Observer observer) {
-		return this.message;
-	}
 	
 	public void postMessage(String msg) {
 		message = msg;
 		System.out.println("Message posted from [%s] -> %s".formatted(name ,message));
 		changed = true;
 		notifyObservers();
+	}
+
+	@Override
+	public Map<?,?> getData() {
+		Map<String, String> data = new HashMap<String, String>();
+		data.put("name", name);
+		data.put("message", message);
+		return data;
 	}
 }

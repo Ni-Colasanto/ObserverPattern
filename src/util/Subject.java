@@ -1,5 +1,7 @@
 package util;
 
+import java.util.Map;
+
 public interface Subject {
 	
 	// Register observer
@@ -11,6 +13,5 @@ public interface Subject {
 	// Notify all observers
 	boolean notifyObservers();
 	
-	Object getUpdate(Observer observer);
-	
+	Map<?,?> getData();
 }

@@ -26,10 +26,10 @@ public class Client {
 		
 		star.deleteObserver(fan3);
 		star.addObserver(fan4);
+		star.deleteObserver(fan4);
 		
 		System.out.println(star.getObservers());
 		
-		fan1.update(star);
 		star.postMessage("Good Morning fans!!");
 		star.deleteObserver(fan2);
 		star.postMessage("Damn!!");
