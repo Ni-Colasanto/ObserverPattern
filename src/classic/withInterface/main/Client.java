@@ -1,7 +1,7 @@
-package main;
+package classic.withInterface.main;
 
-import model.Fan;
-import model.Star;
+import classic.withInterface.model.Fan;
+import classic.withInterface.model.Star;
 
 public class Client {
 

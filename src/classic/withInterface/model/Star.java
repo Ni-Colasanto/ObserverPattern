@@ -1,4 +1,4 @@
-package model;
+package classic.withInterface.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import util.Observer;
-import util.Subject;
+import classic.withInterface.util.Observer;
+import classic.withInterface.util.Subject;
 
 public class Star implements Subject{
 

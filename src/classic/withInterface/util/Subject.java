@@ -1,4 +1,4 @@
-package util;
+package classic.withInterface.util;
 
 import java.util.Map;
 

@@ -1,9 +1,9 @@
-package model;
+package classic.withInterface.model;
 
 import java.util.Map;
 import java.util.Objects;
 
-import util.Observer;
+import classic.withInterface.util.Observer;
 
 public class Fan implements Observer{
 	private String name;
