@@ -58,7 +58,7 @@ public abstract class Subject {
 		System.out.println("Observer [%s] is removed from the list of [%s] subject".formatted(obsID, getID()));
 	}
 	
-	public void NotifyObservers(Event event) { 
+	public void notifyObservers(Event event) { 
 		observers.forEach((observer) -> observer.onNotify(event));
 	}
 

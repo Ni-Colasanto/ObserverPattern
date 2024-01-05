@@ -30,6 +30,6 @@ public class Player extends Subject{
 	
 	public void takeDamage(float howMuch) {
 		health -= howMuch;
-		NotifyObservers(Action.TAKE_DAMAGE);
+		notifyObservers(Action.TAKE_DAMAGE);
 	}
 }
