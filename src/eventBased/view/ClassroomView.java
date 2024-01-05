@@ -29,7 +29,7 @@ public class ClassroomView implements EventListener{
 		methods = new HashMap<>();
 		eventManager = EventManager.getInstance();
 		
-		associateActionToMethod(Student.Action.NO_LONGER_STUDENT, student -> {
+		subscribeAndAssociateMethod(Student.Action.NO_LONGER_STUDENT, student -> {
 			if(removeStudent(student)) {
 				System.out.println("The student [%s] is removed because is no student anymore".formatted(student));
 				System.out.println("Printing new classroom...");
@@ -37,7 +37,7 @@ public class ClassroomView implements EventListener{
 			}
 		});
 		
-		associateActionToMethod(Student.Action.UPADTE_COURSE, student -> {
+		subscribeAndAssociateMethod(Student.Action.UPADTE_COURSE, student -> {
 			if(this.students.contains(student)) {
 				System.out.println("The student [%s] has changed its value".formatted(student));
 				System.out.println("Printing new classroom...");
@@ -55,23 +55,29 @@ public class ClassroomView implements EventListener{
 	}
 	
 	public void printClassroom() {
-		System.out.println("_".repeat(200));
+		System.out.println("-".repeat(200));
 		System.out.println("The classroom %s has the fallowing students:".formatted(name));
 		Iterator<Student> iterator = students.iterator();
 		while(iterator.hasNext()) {
 			System.out.println(iterator.next());
 		}
-		System.out.println("_".repeat(200));
+		System.out.println("-".repeat(200));
 	}
 	
 	@Override
 	public void onNotify(EventType eventType, Object data) {
-		System.out.println("Event happened: %s".formatted(eventType));
-		Student student = (Student) data;
-		methods.get(eventType).accept(student);
+		try {
+			Student student = (Student) data;
+			if(students.contains(student)) {
+				System.out.println("Event happened: %s".formatted(eventType));
+				methods.get(eventType).accept(student);
+			}
+		} catch (ClassCastException e) {
+			e.printStackTrace();
+		}
 	}
 	
-	private void associateActionToMethod(EventType eventType, Consumer<Student> method) {
+	private void subscribeAndAssociateMethod(EventType eventType, Consumer<Student> method) {
 		eventManager.subscribe(eventType, this);
 		methods.put(eventType, student -> {
 			method.accept(student);

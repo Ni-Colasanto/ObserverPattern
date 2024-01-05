@@ -16,17 +16,21 @@ public class StudentView implements EventListener{
 	}
 	
 	public void printStudent() {
-		System.out.println("_".repeat(200));
+		System.out.println("-".repeat(200));
 		System.out.println(student);
-		System.out.println("_".repeat(200));
+		System.out.println("-".repeat(200));
 	}
 
 	@Override
 	public void onNotify(EventType eventType, Object data) {
-		Student studentChanged = (Student) data;
-		if(student.equals(studentChanged)) {
-			System.out.println("Event happened: %s ".formatted(eventType));			
-			printStudent();
+		try {
+			Student studentChanged = (Student) data;
+			if(student.equals(studentChanged)) {
+				System.out.println("Event happened: %s ".formatted(eventType));			
+				printStudent();
+			}
+		} catch (ClassCastException e) {
+			e.printStackTrace();
 		}
 	}
 }
