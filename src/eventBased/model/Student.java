@@ -10,7 +10,7 @@ public class Student {
 	public enum Course{ 
 		ITPS,
 		MATH,
-		LECTURE
+		LITERATURE
 	}
 	
 	public enum Action implements EventType{
