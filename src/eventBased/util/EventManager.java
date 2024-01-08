@@ -8,10 +8,10 @@ import java.util.Objects;
 
 public class EventManager {
 	private static EventManager instance;
-	Map<EventType, List<EventListener>> operations; 
+	Map<EventType, List<EventListener>> events; 
 	
 	private EventManager() {
-		operations = new HashMap<>(); 
+		events = new HashMap<>(); 
 	}
 	
 	public static EventManager getInstance() { 
@@ -22,7 +22,7 @@ public class EventManager {
 	}
 
 	public boolean addEventType(EventType eventType) {
-		if(Objects.nonNull(operations.putIfAbsent(eventType, new ArrayList<>()))) {
+		if(Objects.nonNull(events.putIfAbsent(eventType, new ArrayList<>()))) {
 			System.out.println("Event type [%s] is alread registered".formatted(eventType));
 			return false;
 		}
@@ -31,17 +31,17 @@ public class EventManager {
 	}
 	
 	public boolean subscribe(EventType eventType, EventListener listener) {
-		if(!operations.containsKey(eventType)) {
+		if(!events.containsKey(eventType)) {
 			System.out.println("No such event type [%s]".formatted(eventType));
 			return false;
 		}
-		operations.get(eventType).add(listener);
+		events.get(eventType).add(listener);
 		System.out.println("Listener [%s] added to the event type [%s]".formatted(listener, eventType));
 		return true;	
 	}
 
 	public boolean unsubscribe(EventType eventType, EventListener listener) {
-		List<EventListener> listeners = operations.get(eventType);
+		List<EventListener> listeners = events.get(eventType);
 		if(!Objects.nonNull(listeners)) {
 			System.out.println("No such event type [%s]".formatted(eventType));
 			return false;
@@ -55,9 +55,6 @@ public class EventManager {
 	}
 
 	public void notify(EventType eventType, Object data) {
-		List<EventListener> users = operations.get(eventType);
-		for (EventListener listener : users) {
-			listener.onNotify(eventType, data);
-		}
+		events.get(eventType).forEach(listener -> listener.onNotify(eventType, data));
 	}
 }
