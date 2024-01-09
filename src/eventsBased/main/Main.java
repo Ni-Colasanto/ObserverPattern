@@ -1,14 +1,13 @@
-package eventBased.main;
+package eventsBased.main;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.TreeSet;
 
-import eventBased.model.Student;
-import eventBased.model.Student.Course;
-import eventBased.view.ClassroomView;
-import eventBased.view.StudentView;
+import eventsBased.model.Student;
+import eventsBased.model.Student.Course;
+import eventsBased.view.ClassroomView;
+import eventsBased.view.StudentView;
 
 public class Main {
 

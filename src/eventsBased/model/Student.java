@@ -1,11 +1,27 @@
-package eventBased.model;
+package eventsBased.model;
 
 import java.util.Objects;
 
-import eventBased.util.EventManager;
-import eventBased.util.EventType;
+import eventsBased.util.EventManager;
+import eventsBased.util.EventType;
 
+/**
+ * Represent the student. 
+ * On instantiation, the Actions event type will be automatically added on the Event Manager.
+ * In some cases, it notifies events through Event Manager class. 
+ * 
+ * @author Nicola Colasanto
+ */
 public class Student {
+	
+	/**
+	 * The action specified by this class, this action represent the type of event. 
+	 * They will be used to notify all the listeners that are tracking the specific event.
+	 */
+	public enum Action implements EventType{
+		UPADTE_COURSE,
+		NO_LONGER_STUDENT
+	}
 	
 	public enum Course{ 
 		ITPS,
@@ -13,20 +29,15 @@ public class Student {
 		LITERATURE
 	}
 	
-	public enum Action implements EventType{
-		UPADTE_COURSE,
-		NO_LONGER_STUDENT
-	}
-	
 	private String name;
 	private int age;
 	private int id;
-	
 	private Course course;
-	
 	private boolean isActiveStudent;
+	// Is used to create a unique id for each instance of this class
 	private static int counter = 0;
 	
+	// Single instance, used to add events and notify all listeners tracking that events
 	private EventManager eventManager;
 	
 	public Student(String name, int age, Course course) {
@@ -36,6 +47,7 @@ public class Student {
 		isActiveStudent = true;
 		id = counter++;
 		eventManager = EventManager.getInstance();
+		// Add all the Actions event to the event manager, so a listener can subscribe to them
 		for(var event : Action.values()) {
 			eventManager.addEventType(event);
 		}
@@ -57,11 +69,21 @@ public class Student {
 		return course;
 	}
 
+	/**
+	 * Update the course and lunches the appropriate event to notify that.
+	 * 
+	 * @param course
+	 */
 	public void setCourse(Course course) {
 		this.course = course;
 		eventManager.notify(Action.UPADTE_COURSE, this);
 	}
 	
+	/**
+	 * To indicate that this is no longer an active student.
+	 * It launches the appropriate event to notify that.
+	 * 
+	 */
 	public void noActiveStudent() {
 		isActiveStudent = false;
 		eventManager.notify(Action.NO_LONGER_STUDENT, this);
